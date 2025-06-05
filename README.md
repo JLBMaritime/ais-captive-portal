@@ -69,6 +69,20 @@ For a quick installation directly from GitHub, you can use this one-line command
 curl -sSL https://raw.githubusercontent.com/jlbmaritime/ais-captive-portal/main/install.sh | bash -s -- --from-github && sudo ./complete_installation.sh
 ```
 
+### Direct Installation (Troubleshooting)
+
+If you encounter issues with the standard installation method, you can use the direct installation script which installs all files directly to their system locations:
+
+```bash
+# Make the script executable
+chmod +x direct_install.sh
+
+# Run the installation script as root
+sudo ./direct_install.sh
+```
+
+This direct installation method is useful when troubleshooting file path issues or when you need to ensure all components are installed correctly. It bypasses the two-step installation process by creating all necessary files directly in their required system locations.
+
 ## Customization
 
 - Replace the logo image at `/home/JLBMaritime/captive-portal/var/www/portal/logo.png` with your company logo
