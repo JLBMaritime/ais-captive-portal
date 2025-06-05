@@ -1,0 +1,27 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/portal;
+    index index.html;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # API endpoint for handling WiFi credentials
+    location /api/connect {
+        proxy_pass http://localhost:5000/api/connect;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # API endpoint for checking connection status
+    location /api/status {
+        proxy_pass http://localhost:5000/api/status;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
