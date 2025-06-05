@@ -2,6 +2,7 @@
 Description=JLBMaritime-AIS Captive Portal
 After=network.target
 Wants=network.target
+Documentation=https://github.com/jlbmaritime/ais-captive-portal
 
 [Service]
 Type=oneshot
@@ -9,6 +10,8 @@ ExecStart=/usr/local/bin/setup_ap.sh
 RemainAfterExit=yes
 StandardOutput=journal+console
 StandardError=journal+console
+Restart=on-failure
+RestartSec=30s
 
 [Install]
 WantedBy=multi-user.target

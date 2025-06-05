@@ -103,10 +103,37 @@ Check the following log files for troubleshooting:
 - `/var/log/wifi_portal.log`: Wi-Fi portal service logs
 - `/var/log/wifi_monitor.log`: Connection monitoring logs
 
-Common issues:
-- If the captive portal doesn't appear, try navigating to http://192.168.4.1
-- If the Raspberry Pi can't connect to the customer's network, verify the credentials are correct
-- If the access point doesn't appear, restart the Raspberry Pi or check the setup_ap.log
+### Common issues:
+
+#### The captive portal doesn't appear
+- Try navigating directly to http://192.168.4.1
+- Check if hostapd is running: `systemctl status hostapd`
+- Verify the Wi-Fi interface is working: `ifconfig wlan0`
+- Check hostapd logs: `journalctl -u hostapd`
+
+#### The Raspberry Pi can't connect to the customer's network
+- Verify the credentials are correct
+- Check if the network is in range: `iwlist wlan0 scan | grep ESSID`
+- Check wpa_supplicant logs: `journalctl -u wpa_supplicant`
+- Review the Wi-Fi portal logs: `cat /var/log/wifi_portal.log`
+
+#### The access point doesn't appear
+- Restart the Raspberry Pi: `sudo reboot`
+- Check if the setup script is running: `systemctl status captive-portal`
+- Look for errors in setup logs: `cat /var/log/setup_ap.log`
+- Manually restart the service: `sudo systemctl restart captive-portal`
+
+#### Services fail to start
+- Check if the setup script is executable: `ls -la /usr/local/bin/setup_ap.sh`
+- Ensure Python Flask is installed: `pip3 list | grep Flask`
+- Check system logs: `journalctl -xe`
+- Manually start each service to see errors:
+  ```
+  sudo systemctl start hostapd
+  sudo systemctl start dnsmasq
+  sudo systemctl start nginx
+  sudo systemctl start wifi-portal
+  ```
 
 ## Service Management
 
